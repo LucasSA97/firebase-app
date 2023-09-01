@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import {
   addNewTask,
@@ -6,6 +6,7 @@ import {
   getTasks,
   updateTask,
 } from "../firebase/taskController";
+import { AppContext } from "../App";
 
 const task = {
   title: "Titulo",
@@ -17,8 +18,11 @@ const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [mode, setMode] = useState("add");
 
+  const { user } = useContext(AppContext)
+
   const createNewTask = async () => {
-    await addNewTask(task);
+    await addNewTask(task).catch(e => console.log("Error!"))
+
     setTask({ title: "", description: "" });
     initializeTasks();
   };
@@ -59,6 +63,7 @@ const TaskList = () => {
       <div className="flex flex-col gap-4">
         <h2>Introduce una nueva tarea</h2>
         <input
+          disabled={!user}
           type="text"
           value={task.title}
           placeholder="Titulo"
@@ -66,6 +71,7 @@ const TaskList = () => {
           onChange={(e) => setTask({ ...task, title: e.target.value })}
         />
         <textarea
+          disabled={!user}
           type="text"
           rows={3}
           value={task.description}
@@ -74,10 +80,11 @@ const TaskList = () => {
           onChange={(e) => setTask({ ...task, description: e.target.value })}
         />
         <button
+          disabled={!user}
           onClick={() =>
             mode === "add" ? createNewTask() : updateExistingTask()
           }
-          className="bg-sky-400 text-white rounded shadow py-1 hover:bg-sky-500 transition font-semibold"
+          className="bg-sky-400 text-white rounded shadow py-1 hover:bg-sky-500 transition font-semibold disabled:bg-sky-200"
         >
           {mode === "add" ? "Añadir" : "Actualizar"}
         </button>
@@ -111,6 +118,11 @@ const TaskList = () => {
           </div>
         ))}
       </div>
+      {!user && (
+        <p className="text-red-600">
+          Necesitas estar logeado para añadir tareas!
+        </p>
+      )}
     </div>
   );
 };
