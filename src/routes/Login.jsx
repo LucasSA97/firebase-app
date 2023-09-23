@@ -64,18 +64,20 @@ const Login = () => {
           className="flex flex-col gap-2 max-w-sm"
         >
           <input
+          placeholder="Email"
             className="border text-center rounded border-gray-500 py-1 px-2 outline-none"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></input>
           <input
+          placeholder="Password"
             className="border text-center rounded border-gray-500 py-1 px-2 outline-none"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></input>
-          <button className="bg-sky-400 py-1 text-white rounded shadow">
+          <button className="submit-button">
             Entrar
           </button>
         </form>

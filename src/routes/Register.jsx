@@ -38,18 +38,20 @@ const Register = () => {
         <h1 className="text-center font-semibold">Registrarse</h1>
         <form className="flex flex-col gap-2 max-w-sm" onSubmit={handleSubmit}>
           <input
+          placeholder="Email"
             className="border text-center rounded border-gray-500 py-1 px-2 outline-none"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></input>
           <input
+          placeholder="Password"
             className="border text-center rounded border-gray-500 py-1 px-2 outline-none"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></input>
-          <button className="bg-sky-400 py-1 text-white rounded shadow">Registrate</button>
+          <button className="submit-button">Registrate</button>
         </form>
       </div>
     );
